@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+/* Inter (variable, with optical-size axis) — latin + latin-ext only, bundled locally */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(@fontsource-variable/inter/files/inter-latin-ext-opsz-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(@fontsource-variable/inter/files/inter-latin-opsz-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* ---------- Design tokens (from Figma "Spark Pixel – Exploration", node 845:1347) ---------- */
+:root {
+  --radius: 0.5rem;
+
+  --background: #f8f8f8; /* app canvas */
+  --foreground: #1f2937; /* gray-800 */
+  --card: #ffffff;
+  --card-foreground: #1f2937;
+  --popover: #ffffff;
+  --popover-foreground: #1f2937;
+  --primary: #1f2937;
+  --primary-foreground: #ffffff;
+  --secondary: #f7f7f7;
+  --secondary-foreground: #4b5563; /* gray-600 */
+  --muted: #f6f6f6; /* card shell */
+  --muted-foreground: #6b7280; /* gray-500 */
+  --subtle-foreground: #9ca3af; /* gray-400 */
+  --cell-foreground: #52525b; /* zinc-600 */
+  --accent: #f3f4f6;
+  --accent-foreground: #1f2937;
+  --success: #059669; /* green-600 */
+  --destructive: #ef4444; /* red-500 */
+  --border: #e5e7eb; /* gray-200 */
+  --input: rgb(0 0 0 / 0.1);
+  --ring: #9ca3af;
+  --chart-bar: #e6e6e6;
+  --chart-bar-border: #d8d8d8;
+  --chart-grid: #f2f2f3;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@theme {
+  /* Figma text styles are all leading-none unless stated; size utilities carry no line-height */
+  --text-xs--line-height: 1;
+  --text-sm--line-height: 1;
+  --text-base--line-height: 1;
+  --text-lg--line-height: 1;
+  --text-2xl--line-height: 1;
+}
+
+@theme inline {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-cell-foreground: var(--cell-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-bar: var(--chart-bar);
+  --color-chart-bar-border: var(--chart-bar-border);
+  --color-chart-grid: var(--chart-grid);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --ease-out-expo: var(--ease-out-expo);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    /* Figma "Inter Display" = Inter at the display optical size */
+    font-variation-settings: "opsz" 32;
+    font-feature-settings: "cv11" 0;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+/* ---------- Utilities ---------- */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 4px/4px dashed rule, identical to Figma stroke-dasharray="4 4" */
+@utility dash-y {
+  background-image: repeating-linear-gradient(to bottom, var(--border) 0 4px, transparent 4px 8px);
+}
+
+/* ---------- Motion ---------- */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes draw-x {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes grow-y {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.animate-rise { animation: rise-in 520ms var(--ease-out-expo) both; }
+.animate-fade { animation: fade-in 300ms ease-out both; }
+.animate-draw { animation: draw-x 1100ms var(--ease-out-expo) both; }
+.animate-grow { transform-origin: bottom; animation: grow-y 900ms var(--ease-out-expo) both; }
+.animate-pop { animation: pop 260ms var(--ease-out-expo) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes dd-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes dd-out {
+  from { opacity: 1; }
+  to { opacity: 0; transform: scale(0.98); }
+}
+
+@keyframes ring {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(14deg); }
+  40% { transform: rotate(-12deg); }
+  60% { transform: rotate(8deg); }
+  80% { transform: rotate(-4deg); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-8deg); }
+  45% { transform: rotate(14deg); }
+  60% { transform: rotate(-4deg); }
+  75% { transform: rotate(10deg); }
+}
